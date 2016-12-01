@@ -1,7 +1,14 @@
-from flask import Flask, request, jsonify, redirect, abort, render_template, flash, url_for
-from pymongo import MongoClient
-from datetime import datetime
 import random
+from datetime import datetime
+from pymongo import MongoClient
+from flask import ( Flask,
+    request,
+    jsonify, 
+    redirect,
+    abort,
+    render_template,
+    flash, url_for
+)
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['shortx']
@@ -136,7 +143,10 @@ def add_url():
                 json_output[request.json[long]] = request.url_root + get_short_url(request.json[long])
 
             else:
-                return jsonify({'result': 'Please provide a valid URL.'})
+                return jsonify({
+                    'result': 'Please provide a valid URL.',
+                    'error': request.json[long]
+                    }), 422
 
         return jsonify(json_output), 200
 
