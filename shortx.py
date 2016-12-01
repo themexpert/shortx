@@ -218,7 +218,7 @@ def delete_url(short_url):
         }
         return jsonify(output), 200
     else:
-        jsonify({'result': 'URL not found.'})
+        jsonify({'result': 'URL not found.'}), 404
 
 
 if __name__ == '__main__':
